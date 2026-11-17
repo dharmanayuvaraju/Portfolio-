@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --accent: #00f0ff;
+  --dynamic-accent: #00f0ff;
+  --dynamic-accent-dim: rgba(0, 240, 255, 0.15);
+  --dynamic-accent-glow: rgba(0, 240, 255, 0.4);
+  --bg-deep: #06070e;
+}
+
+/* Accessible, high-contrast focus visible state */
+:focus-visible {
+  outline: 2px solid var(--dynamic-accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 12px var(--dynamic-accent-glow);
+}
+
+/* Custom technical scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #06070e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* Ambient canvas background pattern */
+.bg-lab-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-lab-dots {
+  background-image: radial-gradient(rgba(0, 240, 255, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Smooth glass surface */
+.lab-glass {
+  background: rgba(12, 15, 28, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lab-glass-hover:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.2);
+}
+
+/* 3D perspective setup */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Custom glow utility */
+.glow-accent {
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+.box-glow-accent {
+  box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.3);
+}

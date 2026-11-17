@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#06070e" />
+  <rect x="1" y="1" width="62" height="62" rx="13" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5" />
+  <!-- Lab coordinate grid -->
+  <line x1="32" y1="12" x2="32" y2="52" stroke="rgba(0, 240, 255, 0.2)" stroke-width="1.5" stroke-dasharray="3 3" />
+  <line x1="12" y1="32" x2="52" y2="32" stroke="rgba(0, 240, 255, 0.2)" stroke-width="1.5" stroke-dasharray="3 3" />
+  <!-- Precision glyph YD / Lab node -->
+  <polygon points="32,18 46,26 46,42 32,50 18,42 18,26" stroke="#00f0ff" stroke-width="2.5" fill="rgba(0, 240, 255, 0.08)" />
+  <circle cx="32" cy="32" r="4.5" fill="#00f0ff" />
+  <circle cx="32" cy="18" r="2.5" fill="#00f0ff" />
+  <circle cx="46" cy="26" r="2.5" fill="#00f0ff" />
+  <circle cx="46" cy="42" r="2.5" fill="#00f0ff" />
+  <circle cx="32" cy="50" r="2.5" fill="#00f0ff" />
+  <circle cx="18" cy="42" r="2.5" fill="#00f0ff" />
+  <circle cx="18" cy="26" r="2.5" fill="#00f0ff" />
+</svg>

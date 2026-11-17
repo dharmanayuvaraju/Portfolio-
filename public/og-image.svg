@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <radialGradient id="og-glow" cx="60%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.18" />
+      <stop offset="45%" stop-color="#3b82f6" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#06070e" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="card-border" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep dark canvas background -->
+  <rect width="1200" height="630" fill="#06070e" />
+
+  <!-- Subtle technical grid -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)" />
+
+  <!-- Radial accent glow -->
+  <rect width="1200" height="630" fill="url(#og-glow)" />
+
+  <!-- Technical border frame -->
+  <rect x="40" y="40" width="1120" height="550" rx="16" stroke="url(#card-border)" stroke-width="1.5" fill="none" />
+  
+  <!-- Corner coordinate crosshairs -->
+  <path d="M 30 40 L 50 40 M 40 30 L 40 50" stroke="#00f0ff" stroke-width="1.5" />
+  <path d="M 1150 40 L 1170 40 M 1160 30 L 1160 50" stroke="#00f0ff" stroke-width="1.5" />
+  <path d="M 30 590 L 50 590 M 40 580 L 40 600" stroke="#00f0ff" stroke-width="1.5" />
+  <path d="M 1150 590 L 1170 590 M 1160 580 L 1160 600" stroke="#00f0ff" stroke-width="1.5" />
+
+  <!-- Monospace tag -->
+  <rect x="90" y="100" width="220" height="34" rx="6" fill="rgba(0, 240, 255, 0.1)" stroke="rgba(0, 240, 255, 0.3)" />
+  <circle cx="106" cy="117" r="4" fill="#00f0ff" />
+  <text x="122" y="122" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#00f0ff" letter-spacing="1">PROJECT LAB // 2026</text>
+
+  <!-- Title / Name -->
+  <text x="90" y="240" font-family="'Space Grotesk', system-ui, sans-serif" font-size="64" font-weight="700" fill="#f8fafc" letter-spacing="-1">
+    Yuvaraju Dharmana
+  </text>
+
+  <!-- Line -->
+  <text x="90" y="305" font-family="'Space Grotesk', system-ui, sans-serif" font-size="28" font-weight="500" fill="#94a3b8">
+    AI &amp; ML engineer (B.Tech 2026), Hyderabad
+  </text>
+
+  <!-- Bio sentence -->
+  <text x="90" y="380" font-family="'Space Grotesk', system-ui, sans-serif" font-size="20" fill="#cbd5e1">
+    Backend systems &amp; ML in Python · React frontends · Flutter apps · Power BI dashboards
+  </text>
+
+  <!-- Tech tags -->
+  <g transform="translate(90, 440)">
+    <rect x="0" y="0" width="130" height="36" rx="6" fill="#0c0f1c" stroke="rgba(255,255,255,0.1)" />
+    <text x="65" y="23" font-family="'JetBrains Mono', monospace" font-size="14" fill="#e2e8f0" text-anchor="middle">FastAPI</text>
+
+    <rect x="145" y="0" width="130" height="36" rx="6" fill="#0c0f1c" stroke="rgba(255,255,255,0.1)" />
+    <text x="210" y="23" font-family="'JetBrains Mono', monospace" font-size="14" fill="#e2e8f0" text-anchor="middle">Python ML</text>
+
+    <rect x="290" y="0" width="130" height="36" rx="6" fill="#0c0f1c" stroke="rgba(255,255,255,0.1)" />
+    <text x="355" y="23" font-family="'JetBrains Mono', monospace" font-size="14" fill="#e2e8f0" text-anchor="middle">React + TS</text>
+
+    <rect x="435" y="0" width="130" height="36" rx="6" fill="#0c0f1c" stroke="rgba(255,255,255,0.1)" />
+    <text x="500" y="23" font-family="'JetBrains Mono', monospace" font-size="14" fill="#e2e8f0" text-anchor="middle">Flutter</text>
+
+    <rect x="580" y="0" width="130" height="36" rx="6" fill="#0c0f1c" stroke="rgba(255,255,255,0.1)" />
+    <text x="645" y="23" font-family="'JetBrains Mono', monospace" font-size="14" fill="#e2e8f0" text-anchor="middle">Power BI</text>
+  </g>
+
+  <!-- GitHub profile link on right -->
+  <text x="1110" y="520" font-family="'JetBrains Mono', monospace" font-size="15" fill="#00f0ff" text-anchor="end">github.com/dharmanayuvaraju</text>
+</svg>
