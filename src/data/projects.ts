@@ -1,17 +1,11 @@
 import { Project, ProfileData } from '../types';
 
-/**
- * ============================================================================
- * YUVARAJU DHARMANA - PORTFOLIO & "SIGNAL" ML TOPOLOGY DATA FILE
- * ============================================================================
- */
-
 export const SHOW_DO_IT_NOW_APP = true;
 
 export const profileData: ProfileData = {
   name: "Yuvaraju Dharmana",
-  role: "AI & ML engineer",
-  statusLine: "AI & ML engineer (B.Tech 2026), Hyderabad",
+  role: "AI & ML Engineer",
+  statusLine: "AI & ML Engineer, Hyderabad",
   location: "Hyderabad, India",
   githubUrl: "https://github.com/dharmanayuvaraju",
 
@@ -41,7 +35,7 @@ export const profileData: ProfileData = {
 
 export const projectsData: Project[] = [
   // ==========================================================================
-  // APPS
+  // 1. AI Job Hunt
   // ==========================================================================
   {
     id: "ai-job-hunt",
@@ -54,9 +48,13 @@ export const projectsData: Project[] = [
     repoUrl: "https://github.com/dharmanayuvaraju/ai-job-hunt",
     liveUrl: "https://ai-job-hunt-frontend.onrender.com",
     liveStatusNote: "May take a minute to wake (backend sleeps on free plan)",
-    screenshots: [],
-    pos3D: { x: -320, y: -70, z: -1300, pulsePhase: 0.2, pulseSpeed: 1.2 },
+    modelType: "terminal",
+    pos3D: { x: -2.2, y: 0.3, z: -4 },
   },
+
+  // ==========================================================================
+  // 2. CafeLive Hyderabad
+  // ==========================================================================
   {
     id: "cafelive",
     title: "CafeLive Hyderabad",
@@ -68,23 +66,31 @@ export const projectsData: Project[] = [
     repoUrl: "https://github.com/dharmanayuvaraju/Cafelife",
     liveUrl: "https://cafelive-e1b7f.web.app/",
     statusBadge: "Live Web App",
-    screenshots: [],
-    pos3D: { x: 290, y: -110, z: -1450, pulsePhase: 1.4, pulseSpeed: 1.6 },
+    modelType: "cup",
+    pos3D: { x: 2.2, y: -0.2, z: -9 },
   },
+
+  // ==========================================================================
+  // 3. Kora (QR Restaurant Ordering - 12th project)
+  // ==========================================================================
   {
-    id: "job-tracker",
-    title: "Job-Tracker",
+    id: "kora",
+    title: "Kora",
     category: "Apps",
-    tagline: "Flask job-application tracker with login, CSRF protection and CI",
+    tagline: "QR restaurant ordering web app (QR-based Dine OS)",
     description:
-      "A Flask web application for tracking job applications featuring user authentication, CSRF protection, and continuous integration.",
-    stack: ["Python", "Flask", "Authentication", "CSRF Protection", "CI Pipeline", "SQL"],
-    repoUrl: "https://github.com/dharmanayuvaraju/Job-Tracker",
-    liveUrl: null,
-    statusBadge: "Code Repo",
-    screenshots: [],
-    pos3D: { x: -120, y: -200, z: -1720, pulsePhase: 3.5, pulseSpeed: 1.4 },
+      "A contactless restaurant ordering and dining operating system enabling real-time menu browsing, ordering, and kitchen coordination via QR codes.",
+    stack: ["React", "TypeScript", "Node.js", "Tailwind CSS", "QR Dine OS"],
+    repoUrl: "https://github.com/dharmanayuvaraju/kora--QR-Based-dine-os-",
+    liveUrl: "https://kora-qr-based-dine-os-67os.vercel.app/",
+    statusBadge: "Live on Vercel",
+    modelType: "qr-cube",
+    pos3D: { x: -2.3, y: 0.2, z: -14 },
   },
+
+  // ==========================================================================
+  // 4. Do It Now
+  // ==========================================================================
   {
     id: "do-it-now",
     title: "Do It Now",
@@ -97,40 +103,30 @@ export const projectsData: Project[] = [
     liveUrl: null,
     statusBadge: "Mobile App",
     visible: SHOW_DO_IT_NOW_APP,
-    screenshots: [],
-    pos3D: { x: 330, y: 150, z: -1880, pulsePhase: 4.8, pulseSpeed: 1.3 },
-  },
-  {
-    id: "ghatmitra",
-    title: "GhatMitra",
-    category: "Apps",
-    tagline: "FastAPI civic-monitoring dashboard",
-    description:
-      "A civic-monitoring dashboard powered by FastAPI designed to record and visualize municipal data and civic reports.",
-    stack: ["FastAPI", "Python", "Civic Dashboard", "REST API"],
-    repoUrl: "https://github.com/dharmanayuvaraju/Ghatmitra",
-    liveUrl: null,
-    statusBadge: "Archived",
-    screenshots: [],
-    pos3D: { x: -280, y: 220, z: -2150, pulsePhase: 2.1, pulseSpeed: 1.5 },
-  },
-  {
-    id: "chaibagh",
-    title: "ChaiBagh Tea Portal",
-    category: "Apps",
-    tagline: "FastAPI demo store",
-    description:
-      "A demo online tea catalog and portal store built using FastAPI.",
-    stack: ["FastAPI", "Python", "E-commerce Architecture", "Demo Store"],
-    repoUrl: "https://github.com/dharmanayuvaraju/teatime-portal",
-    liveUrl: null,
-    statusBadge: "Demo",
-    screenshots: [],
-    pos3D: { x: 110, y: -230, z: -2280, pulsePhase: 3.9, pulseSpeed: 1.7 },
+    modelType: "phone",
+    pos3D: { x: 2.3, y: 0.1, z: -19 },
   },
 
   // ==========================================================================
-  // WEBSITES
+  // 5. Job-Tracker
+  // ==========================================================================
+  {
+    id: "job-tracker",
+    title: "Job-Tracker",
+    category: "Apps",
+    tagline: "Flask job-application tracker with login, CSRF protection and CI",
+    description:
+      "A Flask web application for tracking job applications featuring user authentication, CSRF protection, and continuous integration.",
+    stack: ["Python", "Flask", "Authentication", "CSRF Protection", "CI Pipeline", "SQL"],
+    repoUrl: "https://github.com/dharmanayuvaraju/Job-Tracker",
+    liveUrl: null,
+    statusBadge: "Code Repo",
+    modelType: "terminal",
+    pos3D: { x: -2.1, y: -0.3, z: -24 },
+  },
+
+  // ==========================================================================
+  // 6. Teja Studios
   // ==========================================================================
   {
     id: "teja-studios",
@@ -143,9 +139,49 @@ export const projectsData: Project[] = [
     repoUrl: "https://github.com/dharmanayuvaraju/teja-studios-website",
     liveUrl: "https://teja-studios-website.vercel.app/",
     statusBadge: "Live on Vercel",
-    screenshots: [],
-    pos3D: { x: -360, y: 120, z: -1580, pulsePhase: 2.7, pulseSpeed: 1.1 },
+    modelType: "softbox",
+    pos3D: { x: 2.2, y: 0.4, z: -29 },
   },
+
+  // ==========================================================================
+  // 7. GhatMitra
+  // ==========================================================================
+  {
+    id: "ghatmitra",
+    title: "GhatMitra",
+    category: "Apps",
+    tagline: "FastAPI civic-monitoring dashboard",
+    description:
+      "A civic-monitoring dashboard powered by FastAPI designed to record and visualize municipal data and civic reports.",
+    stack: ["FastAPI", "Python", "Civic Dashboard", "REST API"],
+    repoUrl: "https://github.com/dharmanayuvaraju/Ghatmitra",
+    liveUrl: null,
+    statusBadge: "Archived",
+    modelType: "beacon",
+    pos3D: { x: -2.2, y: 0.2, z: -34 },
+  },
+
+  // ==========================================================================
+  // 8. ChaiBagh Tea Portal
+  // ==========================================================================
+  {
+    id: "chaibagh",
+    title: "ChaiBagh Tea Portal",
+    category: "Apps",
+    tagline: "FastAPI demo store",
+    description:
+      "A demo online tea catalog and portal store built using FastAPI.",
+    stack: ["FastAPI", "Python", "E-commerce Architecture", "Demo Store"],
+    repoUrl: "https://github.com/dharmanayuvaraju/teatime-portal",
+    liveUrl: null,
+    statusBadge: "Demo",
+    modelType: "teapot",
+    pos3D: { x: 2.1, y: -0.2, z: -39 },
+  },
+
+  // ==========================================================================
+  // 9. Sree Swathi Tiffins
+  // ==========================================================================
   {
     id: "swathi-tiffins",
     title: "Sree Swathi Tiffins",
@@ -157,12 +193,12 @@ export const projectsData: Project[] = [
     repoUrl: "https://github.com/dharmanayuvaraju/swathi-tiffins-website",
     liveUrl: null,
     statusBadge: "Local Only",
-    screenshots: [],
-    pos3D: { x: 180, y: -40, z: -2020, pulsePhase: 0.9, pulseSpeed: 1.0 },
+    modelType: "cloche",
+    pos3D: { x: -2.2, y: 0.3, z: -44 },
   },
 
   // ==========================================================================
-  // DASHBOARDS (Learning projects, built on public sample datasets)
+  // 10. Retail Sales Dashboard
   // ==========================================================================
   {
     id: "retail-sales-dashboard",
@@ -176,9 +212,13 @@ export const projectsData: Project[] = [
     liveUrl: null,
     statusBadge: "Learning project",
     learningProject: true,
-    screenshots: [],
-    pos3D: { x: -190, y: -80, z: -2390, pulsePhase: 5.1, pulseSpeed: 1.2 },
+    modelType: "barchart",
+    pos3D: { x: 2.3, y: -0.1, z: -49 },
   },
+
+  // ==========================================================================
+  // 11. E-Commerce Dashboard
+  // ==========================================================================
   {
     id: "ecommerce-dashboard",
     title: "E-Commerce Dashboard",
@@ -191,9 +231,13 @@ export const projectsData: Project[] = [
     liveUrl: null,
     statusBadge: "Learning project",
     learningProject: true,
-    screenshots: [],
-    pos3D: { x: 270, y: 190, z: -2480, pulsePhase: 1.8, pulseSpeed: 1.4 },
+    modelType: "barchart",
+    pos3D: { x: -2.2, y: 0.2, z: -54 },
   },
+
+  // ==========================================================================
+  // 12. University Dashboard
+  // ==========================================================================
   {
     id: "university-dashboard",
     title: "University Dashboard",
@@ -206,7 +250,7 @@ export const projectsData: Project[] = [
     liveUrl: null,
     statusBadge: "Learning project",
     learningProject: true,
-    screenshots: [],
-    pos3D: { x: -40, y: 160, z: -2580, pulsePhase: 4.2, pulseSpeed: 1.3 },
+    modelType: "barchart",
+    pos3D: { x: 2.1, y: 0.1, z: -59 },
   },
 ];

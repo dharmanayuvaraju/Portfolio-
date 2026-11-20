@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowDown, Github, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowDown, Github, FileText, Sparkles } from 'lucide-react';
 import { profileData } from '../../data/projects';
 
 interface HeroChapterProps {
@@ -7,82 +7,86 @@ interface HeroChapterProps {
 }
 
 export const HeroChapter: React.FC<HeroChapterProps> = ({ onExplore }) => {
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const touchCheck =
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches;
+      setIsTouch(touchCheck);
+    }
+  }, []);
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%) translateZ(0px)',
-        transformStyle: 'preserve-3d',
-      }}
-      className="w-full max-w-4xl px-4 text-center select-none pointer-events-auto"
+    <section
+      id="home"
+      className="min-h-[85vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 py-16 max-w-4xl mx-auto select-none"
     >
-      {/* Background Coordinate Depth Layer (z = -60px) */}
-      <div
-        style={{ transform: 'translateZ(-60px)' }}
-        className="font-mono text-[11px] text-[var(--dynamic-accent)] tracking-widest uppercase mb-4 opacity-80"
-      >
-        <span className="inline-block w-2 h-2 rounded-full bg-[var(--dynamic-accent)] mr-2 animate-ping" />
-        <span>SIGNAL // LIVING ML TOPOLOGY · HYD (17.3850° N, 78.4867° E)</span>
+      {/* Location / Status Badge */}
+      <div className="inline-flex items-center gap-2 text-xs font-mono text-accent uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/20 mb-6">
+        <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+        <span>AI &amp; ML Engineer · Hyderabad (B.Tech 2026)</span>
       </div>
 
-      {/* Main Name Heading Depth Layer (z = 40px) */}
-      <h1
-        style={{ transform: 'translateZ(40px)' }}
-        className="font-sans font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-white mb-4 text-balance"
-      >
+      {/* Main Name Heading */}
+      <h1 className="font-sans font-bold text-4xl sm:text-6xl md:text-7xl text-white tracking-tight mb-4">
         {profileData.name}
       </h1>
 
-      {/* Subtitle Depth Layer (z = 20px) */}
-      <p
-        style={{ transform: 'translateZ(20px)' }}
-        className="font-sans text-xl sm:text-2xl md:text-3xl text-slate-300 font-medium max-w-3xl mx-auto mb-6 text-balance"
-      >
+      {/* Status Subtitle */}
+      <p className="font-sans text-xl sm:text-2xl md:text-3xl text-sand-200 font-medium max-w-3xl mx-auto mb-6">
         {profileData.statusLine}
       </p>
 
-      {/* Brief Bio Sentence Depth Layer (z = 0px) */}
-      <p
-        style={{ transform: 'translateZ(0px)' }}
-        className="font-sans text-sm sm:text-base text-slate-400 max-w-xl mx-auto mb-8 leading-relaxed"
-      >
+      {/* Bio Statement */}
+      <p className="font-sans text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
         {profileData.bioSentence}
       </p>
 
-      {/* Action Buttons Depth Layer (z = 60px) */}
-      <div
-        style={{ transform: 'translateZ(60px)' }}
-        className="flex flex-wrap items-center justify-center gap-4 font-mono text-xs"
-      >
+      {/* Action Buttons (min 44px tap target) */}
+      <div className="flex flex-wrap items-center justify-center gap-3.5 font-sans text-sm">
         <button
+          type="button"
           onClick={onExplore}
-          className="group flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[var(--dynamic-accent)] text-canvas-deep font-semibold shadow-lg shadow-[var(--dynamic-accent-dim)] transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="flex items-center gap-2 px-6 py-3 rounded-lg bg-accent hover:bg-accent-hover text-black font-semibold min-h-[44px] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
-          <Sparkles className="w-4 h-4 text-canvas-deep" />
-          <span>Traverse Constellation</span>
-          <ArrowDown className="w-4 h-4 text-canvas-deep group-hover:translate-y-0.5 transition-transform" />
+          <Sparkles className="w-4 h-4 text-black" />
+          <span>Projects</span>
+          <ArrowDown className="w-4 h-4 text-black" />
         </button>
 
         <a
           href={profileData.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-canvas-card border border-white/10 hover:border-[var(--dynamic-accent)] text-slate-200 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dynamic-accent)]"
+          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-canvas-card border border-white/10 hover:border-accent text-white font-medium min-h-[44px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
-          <Github className="w-4 h-4 text-[var(--dynamic-accent)]" />
+          <Github className="w-4 h-4 text-accent" />
           <span>GitHub Profile</span>
+        </a>
+
+        <a
+          href={profileData.resumePdfPlaceholder}
+          download="Yuvaraju_Dharmana_Resume.pdf"
+          className="flex items-center gap-2 px-5 py-3 rounded-lg bg-canvas-card border border-white/10 hover:border-accent text-white font-medium min-h-[44px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          <FileText className="w-4 h-4 text-accent" />
+          <span>Resume</span>
         </a>
       </div>
 
-      {/* Parallaxing Scroll Invitation Indicator */}
-      <div
-        style={{ transform: 'translateZ(-40px)' }}
-        className="mt-12 text-slate-500 font-mono text-[11px] animate-bounce"
-      >
-        ↓ Scroll wheel or drag to advance camera through the 3D topology ↓
+      {/* Scroll / Swipe invitation indicator */}
+      <div className="mt-12 text-slate-400 font-mono text-xs flex items-center gap-2">
+        <span>↓</span>
+        <span>
+          {isTouch
+            ? 'Swipe up to advance through projects'
+            : 'Scroll down to advance through projects'}
+        </span>
+        <span>↓</span>
       </div>
-    </div>
+    </section>
   );
 };

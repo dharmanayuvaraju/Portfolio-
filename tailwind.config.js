@@ -9,41 +9,39 @@ export default {
     extend: {
       colors: {
         canvas: {
-          DEFAULT: '#06070e',
-          deep: '#030408',
-          card: '#0c0f1c',
-          cardHover: '#12172a',
-          surface: '#161c33',
+          DEFAULT: '#0a0b10', // Deep ink
+          deep: '#06070a',
+          card: '#121520',    // Flat card background (no glassmorphism)
+          cardHover: '#181c2b',
+          surface: '#1d2233',
           border: 'rgba(255, 255, 255, 0.08)',
           borderSubtle: 'rgba(255, 255, 255, 0.04)',
         },
+        ink: {
+          950: '#06070a',
+          900: '#0a0b10',
+          800: '#121520',
+          700: '#1d2233',
+        },
+        sand: {
+          50: '#faf9f6',
+          100: '#f5f3ef', // Warm off-white
+          200: '#e8e5de',
+          300: '#d5d0c5',
+          400: '#9e998e',
+        },
         accent: {
-          DEFAULT: '#00f0ff',
-          glow: 'rgba(0, 240, 255, 0.18)',
-          subtle: 'rgba(0, 240, 255, 0.08)',
-          muted: '#0284c7',
-          hover: '#38bdf8',
-          text: '#7dd3fc',
+          DEFAULT: '#ff6b35', // Single vibrant warm orange accent
+          hover: '#ff8452',
+          muted: '#c2410c',
+          glow: 'rgba(255, 107, 53, 0.25)',
+          subtle: 'rgba(255, 107, 53, 0.1)',
         },
       },
       fontFamily: {
-        sans: ['"Space Grotesk"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', '"Space Mono"', 'monospace'],
+        sans: ['"Space Grotesk"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
       },
-      animation: {
-        'pulse-subtle': 'pulseSubtle 4s ease-in-out infinite',
-        'float-slow': 'floatSlow 7s ease-in-out infinite',
-      },
-      keyframes: {
-        pulseSubtle: {
-          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.7', transform: 'scale(1.05)' },
-        },
-        floatSlow: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
-        }
-      }
     },
   },
   plugins: [],
