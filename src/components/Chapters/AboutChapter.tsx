@@ -219,7 +219,7 @@ export const AboutChapter: React.FC = () => {
               </a>
             </div>
             <div className="text-white text-sm font-sans truncate">
-              linkedin.com/in/yuvaraju-dharmana
+              linkedin.com/in/dharmana-yuvaraju
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ import { trackPageView } from './utils/analytics';
 // Lazy-load the Three.js scene (First-load JS under 150KB gzip budget)
 const ThreeCanvas = React.lazy(() => import('./components/ThreeCanvas'));
 
-// Auto Lite detection helper
+// Auto Lite detection helper: fresh visits default to 3D mode!
 function detectAutoLite(): boolean {
   if (typeof window === 'undefined') return false;
   const saved = localStorage.getItem('portfolio_lite_mode');
@@ -24,10 +24,9 @@ function detectAutoLite(): boolean {
     return saved === 'true';
   }
 
+  // Fresh visits MUST default to 3D mode
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nav = navigator as any;
-  const isLowCpu = typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4;
-  const isLowMem = typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 4;
   const isSaveData = nav.connection?.saveData === true;
 
   let hasWebGL = false;
@@ -41,7 +40,18 @@ function detectAutoLite(): boolean {
     hasWebGL = false;
   }
 
-  return isReducedMotion || isLowCpu || isLowMem || isSaveData || !hasWebGL;
+  if (!hasWebGL || isReducedMotion || isSaveData) {
+    return true;
+  }
+
+  // Hard constraints: only if both CPU AND memory are strictly <= 4
+  const isLowCpu = typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4;
+  const isLowMem = typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 4;
+  if (isLowCpu && isLowMem) {
+    return true;
+  }
+
+  return false;
 }
 
 export const App: React.FC = () => {
@@ -129,35 +139,61 @@ export const App: React.FC = () => {
     }, 6000);
   }, []);
 
+  // Memoized callback to update nearest project without triggering extra renders
+  const handleNearestProjectChange = useCallback((proj: Project | null, idx: number) => {
+    if (proj) {
+      setFocalProject(proj);
+      setFocalIndex(idx);
+    }
+  }, []);
+
   // Scroll tracking driving camera progress and chapter detection
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (maxScroll <= 0) return;
+      const vh = window.innerHeight;
 
-      const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
-      setScrollProgress(progress);
-
+      const heroEl = document.getElementById('home');
       const aboutEl = document.getElementById('about');
       const contactEl = document.getElementById('contact');
-      const scrollMid = scrollY + window.innerHeight * 0.45;
 
-      if (contactEl && scrollMid >= contactEl.offsetTop) {
+      // 1. Precise Chapter Detection using getBoundingClientRect()
+      if (contactEl && contactEl.getBoundingClientRect().top <= vh * 0.5) {
         setCurrentChapter(3);
-      } else if (aboutEl && scrollMid >= aboutEl.offsetTop) {
+      } else if (aboutEl && aboutEl.getBoundingClientRect().top <= vh * 0.5) {
         setCurrentChapter(2);
-      } else if (progress > 0.06) {
-        setCurrentChapter(1);
-      } else {
+      } else if (heroEl && heroEl.getBoundingClientRect().bottom > vh * 0.35) {
         setCurrentChapter(0);
+      } else {
+        setCurrentChapter(1);
+      }
+
+      // 2. 3D Flight Progress Calculation
+      if (!liteMode && heroEl) {
+        const heroHeight = heroEl.offsetHeight;
+        const flightCorridorEl = document.getElementById('flight-corridor');
+        const corridorHeight = flightCorridorEl ? flightCorridorEl.offsetHeight : vh * 4.5;
+
+        if (scrollY <= heroHeight * 0.35) {
+          setScrollProgress(0);
+        } else {
+          // Progress from 0 to 1 across the flight corridor
+          const rawProgress = (scrollY - heroHeight * 0.35) / corridorHeight;
+          const progress = Math.min(1, Math.max(0, rawProgress));
+          setScrollProgress(progress);
+        }
+      } else if (liteMode) {
+        const maxScroll = document.documentElement.scrollHeight - vh;
+        if (maxScroll > 0) {
+          setScrollProgress(Math.min(1, Math.max(0, scrollY / maxScroll)));
+        }
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [liteMode]);
 
   // Chapter Navigation Handler
   const navigateToChapter = useCallback(
@@ -172,9 +208,9 @@ export const App: React.FC = () => {
           const el = document.getElementById('projects');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         } else {
-          // In 3D flight mode, jump to start of project corridor (t = 0.12)
-          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          window.scrollTo({ top: maxScroll * 0.12, behavior: 'smooth' });
+          const heroEl = document.getElementById('home');
+          const heroHeight = heroEl ? heroEl.offsetHeight : window.innerHeight;
+          window.scrollTo({ top: heroHeight, behavior: 'smooth' });
         }
         return;
       }
@@ -190,10 +226,14 @@ export const App: React.FC = () => {
 
   // Jump camera directly to project index along the flight
   const navigateToProjectIndex = useCallback((index: number) => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    // Map index 0..11 to progress t = 0.11 .. 0.77
-    const t = 0.11 + (index / 11) * (0.77 - 0.11);
-    window.scrollTo({ top: t * maxScroll, behavior: 'smooth' });
+    const heroEl = document.getElementById('home');
+    const heroHeight = heroEl ? heroEl.offsetHeight : window.innerHeight;
+    const flightCorridorEl = document.getElementById('flight-corridor');
+    const corridorHeight = flightCorridorEl ? flightCorridorEl.offsetHeight : window.innerHeight * 4.5;
+
+    // Map index 0..11 to progress t = 0.08 .. 0.85
+    const t = 0.08 + (index / 11) * (0.85 - 0.08);
+    window.scrollTo({ top: heroHeight * 0.35 + t * corridorHeight, behavior: 'smooth' });
   }, []);
 
   // Filtered projects list
@@ -205,8 +245,9 @@ export const App: React.FC = () => {
   // Determine if flight label overlay should be visible in 3D mode
   const isFlightLabelVisible =
     !liteMode &&
-    scrollProgress >= 0.05 &&
-    scrollProgress <= 0.82;
+    currentChapter === 1 &&
+    scrollProgress >= 0.02 &&
+    scrollProgress <= 0.95;
 
   return (
     <div className="relative min-h-screen bg-[#0a0b10] text-[#f5f3ef] selection:bg-accent selection:text-black">
@@ -224,12 +265,7 @@ export const App: React.FC = () => {
           <ThreeCanvas
             projects={projectsData}
             scrollProgress={scrollProgress}
-            onNearestProjectChange={(proj, idx) => {
-              if (proj) {
-                setFocalProject(proj);
-                setFocalIndex(idx);
-              }
-            }}
+            onNearestProjectChange={handleNearestProjectChange}
             onLowFps={handleLowFpsFallback}
             isMobile={isMobile}
           />
@@ -238,11 +274,17 @@ export const App: React.FC = () => {
 
       {/* 3. 3D FLIGHT MODE VIEW (Primary View: Camera Flight + Focal Labels) */}
       {!liteMode ? (
-        <>
+        <div className="relative">
+          {/* 0. Hero Section: Top of site with Intro Video */}
+          <div className="relative z-10 bg-[#0a0b10]">
+            <HeroChapter onExplore={() => navigateToChapter(1)} />
+          </div>
+
           {/* Virtual scroll corridor that drives the CatmullRom camera flight */}
           <div
+            id="flight-corridor"
             className="w-full pointer-events-none"
-            style={{ height: '480vh' }}
+            style={{ height: '450vh' }}
             aria-hidden="true"
           />
 
@@ -258,17 +300,12 @@ export const App: React.FC = () => {
             visible={isFlightLabelVisible}
           />
 
-          {/* Hero Section at the start of the 3D space */}
-          <div className="absolute top-0 left-0 right-0 z-10 pointer-events-auto">
-            <HeroChapter onExplore={() => navigateToChapter(1)} />
-          </div>
-
           {/* End of Flight: About & Contact DOM Overlays (Solid, readable, outside 3D space) */}
           <main className="relative z-10 bg-[#0a0b10] border-t border-white/10 pt-16 pb-24 sm:pb-16">
             <AboutChapter />
             <ContactChapter onRewindToTop={() => navigateToChapter(0)} />
           </main>
-        </>
+        </div>
       ) : (
         /* 4. LITE MODE VIEW (Clean 2D Fallback: Stacked layout) */
         <main className="relative z-10 pt-16 pb-24 sm:pb-16">

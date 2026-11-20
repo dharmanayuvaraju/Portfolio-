@@ -15,7 +15,7 @@ export const profileData: ProfileData = {
   emailPlaceholder: "dharmanayuvaraju3@gmail.com",
   phone: "+91 7337422054",
   resumePdfPlaceholder: "/resume.pdf",
-  linkedinPlaceholder: "https://linkedin.com/in/yuvaraju-dharmana",
+  linkedinPlaceholder: "https://www.linkedin.com/in/dharmana-yuvaraju",
 
   skills: [
     {

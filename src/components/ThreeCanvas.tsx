@@ -14,13 +14,13 @@ interface ThreeCanvasProps {
 }
 
 // Camera Flight Path along a smooth CatmullRom Curve
-function createFlightCurve(): THREE.CatmullRomCurve3 {
+export function createFlightCurve(): THREE.CatmullRomCurve3 {
   const points = [
     new THREE.Vector3(0, 0, 8),        // 0.00: Hero Origin
     new THREE.Vector3(0, 0, 2),        // 0.05: Transition
     new THREE.Vector3(-0.2, 0.2, -4),  // 0.11: Project 1 (AI Job Hunt)
     new THREE.Vector3(0.2, -0.1, -9),  // 0.17: Project 2 (CafeLive)
-    new THREE.Vector3(-0.3, 0.2, -14), // 0.23: Project 3 (Kora - Dine OS)
+    new THREE.Vector3(-0.3, 0.2, -14), // 0.23: Project 3 (Kora - QR Dine OS)
     new THREE.Vector3(0.3, 0.1, -19),  // 0.29: Project 4 (Do It Now)
     new THREE.Vector3(-0.2, -0.2, -24),// 0.35: Project 5 (Job-Tracker)
     new THREE.Vector3(0.3, 0.2, -29),  // 0.41: Project 6 (Teja Studios)
@@ -49,24 +49,22 @@ const SceneRig: React.FC<{
   const curTRef = useRef(0);
   const lookTargetRef = useRef(new THREE.Vector3(0, 0, -10));
 
-  // FPS Probe for 1 second
+  // FPS Probe for 1 second with warmup
+  const probeWarmupRef = useRef(0);
   const frameCountRef = useRef(0);
   const fpsStartTimeRef = useRef<number | null>(null);
   const probeDoneRef = useRef(false);
 
-  const [nearestIndex, setNearestIndex] = useState<number>(0);
-
-  // Initial notification
-  useEffect(() => {
-    if (projects.length > 0) {
-      onNearestChange(projects[0], 0);
-    }
-  }, [projects, onNearestChange]);
+  // Active nearest index tracked by ref to prevent stale closures and state loops
+  const nearestIndexRef = useRef(0);
+  const [activeNearestIndex, setActiveNearestIndex] = useState(0);
 
   useFrame((_, delta) => {
-    // 1. FPS Probe Check
+    // 1. FPS Probe Check (warmup of ~60 frames first so startup compile doesn't trip fallback)
     if (!probeDoneRef.current) {
-      if (fpsStartTimeRef.current === null) {
+      if (probeWarmupRef.current < 60) {
+        probeWarmupRef.current++;
+      } else if (fpsStartTimeRef.current === null) {
         fpsStartTimeRef.current = performance.now();
       } else {
         frameCountRef.current++;
@@ -97,24 +95,25 @@ const SceneRig: React.FC<{
     lookTargetRef.current.lerp(targetLookAt, 0.15);
     camera.lookAt(lookTargetRef.current);
 
-    // 3. Find closest project object to the camera
+    // 3. Find closest project object to the camera position
+    const camZ = camPos.z;
     let closestDist = Infinity;
-    let closestIdx = -1;
+    let closestIdx = 0;
 
     for (let i = 0; i < projects.length; i++) {
       const p = projects[i];
-      const dist = Math.abs(p.pos3D.z - camPos.z);
+      const dist = Math.abs(p.pos3D.z - camZ);
       if (dist < closestDist) {
         closestDist = dist;
         closestIdx = i;
       }
     }
 
-    if (closestDist < 6.0 && closestIdx >= 0) {
-      if (closestIdx !== nearestIndex) {
-        setNearestIndex(closestIdx);
-        onNearestChange(projects[closestIdx], closestIdx);
-      }
+    // When the closest project changes as the camera flies, notify parent immediately
+    if (closestIdx !== nearestIndexRef.current) {
+      nearestIndexRef.current = closestIdx;
+      setActiveNearestIndex(closestIdx);
+      onNearestChange(projects[closestIdx], closestIdx);
     }
   });
 
@@ -139,7 +138,7 @@ const SceneRig: React.FC<{
           if (distZ > 22) return null;
         }
 
-        const isNearest = idx === nearestIndex;
+        const isNearest = idx === activeNearestIndex;
 
         return (
           <ProjectObject

@@ -33,9 +33,9 @@ export const FlightLabelOverlay: React.FC<FlightLabelOverlayProps> = ({
   return (
     <div className="fixed inset-0 pointer-events-none z-20 flex flex-col justify-between p-4 sm:p-6 md:p-8">
       {/* Top Bar: Filter Pills HUD */}
-      <div className="w-full flex justify-center pointer-events-auto pt-14 sm:pt-16">
+      <div className="w-full flex justify-center pointer-events-auto pt-16 sm:pt-20 px-2 sm:px-4">
         <div
-          className="flex items-center gap-1.5 p-1 rounded-full bg-[#121520] border border-white/10 overflow-x-auto whitespace-nowrap scrollbar-none shadow-xl max-w-full"
+          className="flex items-center gap-2 p-1.5 rounded-full bg-[#121520] border border-white/10 overflow-x-auto whitespace-nowrap scrollbar-none shadow-2xl max-w-full touch-pan-x"
           role="tablist"
           aria-label="Filter 3D flight projects by category"
         >
@@ -48,7 +48,7 @@ export const FlightLabelOverlay: React.FC<FlightLabelOverlayProps> = ({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => onSelectFilter(cat)}
-                className={`px-3.5 py-2 rounded-full text-xs font-mono transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                className={`px-4 py-2 rounded-full text-xs font-mono transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                   isSelected
                     ? 'bg-accent text-black font-bold'
                     : 'text-slate-300 hover:text-white hover:bg-white/5'

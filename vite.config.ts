@@ -7,6 +7,9 @@ export default defineConfig({
   server: {
     port: 3000,
     open: false,
+    watch: {
+      ignored: ['**/public/**', '**/*.mp4'],
+    },
   },
   build: {
     target: 'es2020',

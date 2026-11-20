@@ -72,7 +72,7 @@ export const ProjectsChapter: React.FC<ProjectsChapterProps> = ({
 
         {/* Filter Pills - scrollable row on mobile, must NEVER clip */}
         <div
-          className="flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-none py-1 px-1 -mx-1 max-w-full"
+          className="flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-none py-1.5 px-1 max-w-full touch-pan-x"
           role="tablist"
           aria-label="Filter projects by category"
         >

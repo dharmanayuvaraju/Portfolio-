@@ -152,7 +152,7 @@ export const ContactChapter: React.FC<ContactChapterProps> = ({
             <Linkedin className="w-5 h-5 text-accent" />
             <div>
               <div className="text-slate-400 text-xs font-mono">LinkedIn</div>
-              <div className="text-white font-semibold text-sm">linkedin.com/in/yuvaraju-dharmana</div>
+              <div className="text-white font-semibold text-sm">linkedin.com/in/dharmana-yuvaraju</div>
             </div>
           </div>
           <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
